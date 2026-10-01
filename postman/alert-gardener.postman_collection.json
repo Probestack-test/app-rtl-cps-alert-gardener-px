@@ -1,7 +1,7 @@
 {
   "info" : {
     "name" : "alert-gardener Postman Collection",
-    "description" : "Continuous alert quality intelligence and noise reduction for the \nForgeSphere platform. Ingests alert firing data from Prometheus, \nPagerDuty, Datadog, and CloudWatch. Analyzes each alert for noise \nratio, false-positive rate, and actionability. Ranks the worst \noffenders by wasted engineering time, and recommends tuning, \nsilencing, or deletion. Restores pager trust by pruning noise.\n\n\nOpenAPI version: 1.0.0",
+    "description" : "Continuous alert quality intelligence and noise reduction for the \nForgeSphere platform. Ingests alert firing data from Prometheus, \nPagerDuty, Datadog, and CloudWatch. Analyzes each alert for noise \nratio, false-positive rate, and actionability. Ranks the worst \noffenders by wasted engineering time, and recommends tuning, \nsilencing, or deletion. Restores pager trust by pruning noise.\n\n\nOpenAPI version: 2.0.0",
     "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth" : {
@@ -14,7 +14,7 @@
   },
   "variable" : [ {
     "key" : "baseUrl",
-    "value" : "https://alertgardener.forgesphere.lightning.com/v1",
+    "value" : "https://alertgardener.forgesphere.lightning.com/v24",
     "type" : "string",
     "description" : "Override with the base URL of the deployed Apigee proxy."
   }, {
@@ -153,7 +153,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     }, {
       "name" : "500 Alert backend or analytics engine unavailable.",
       "originalRequest" : {
@@ -186,7 +186,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     } ]
   }, {
     "name" : "Rank alerts by wasted engineering time",
@@ -341,7 +341,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     }, {
       "name" : "500 Alert backend or analytics engine unavailable.",
       "originalRequest" : {
@@ -395,7 +395,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     } ]
   }, {
     "name" : "Get detailed health report for a specific alert",
@@ -487,7 +487,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     }, {
       "name" : "500 Alert backend or analytics engine unavailable.",
       "originalRequest" : {
@@ -520,7 +520,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     } ]
   }, {
     "name" : "Silence, tune, or delete an alert",
@@ -624,7 +624,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     }, {
       "name" : "404 Alert not found.",
       "originalRequest" : {
@@ -661,7 +661,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     }, {
       "name" : "500 Alert backend or analytics engine unavailable.",
       "originalRequest" : {
@@ -698,7 +698,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v24/alerts/PaymentProcessorHigh5xx/health\"}"
     } ]
   } ]
 }
