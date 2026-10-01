@@ -1,0 +1,704 @@
+{
+  "info" : {
+    "name" : "alert-gardener Postman Collection",
+    "description" : "Continuous alert quality intelligence and noise reduction for the \nForgeSphere platform. Ingests alert firing data from Prometheus, \nPagerDuty, Datadog, and CloudWatch. Analyzes each alert for noise \nratio, false-positive rate, and actionability. Ranks the worst \noffenders by wasted engineering time, and recommends tuning, \nsilencing, or deletion. Restores pager trust by pruning noise.\n\n\nOpenAPI version: 1.0.0",
+    "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth" : {
+    "type" : "bearer",
+    "bearer" : [ {
+      "key" : "token",
+      "value" : "{{accessToken}}",
+      "type" : "string"
+    } ]
+  },
+  "variable" : [ {
+    "key" : "baseUrl",
+    "value" : "https://alertgardener.forgesphere.lightning.com/v1",
+    "type" : "string",
+    "description" : "Override with the base URL of the deployed Apigee proxy."
+  }, {
+    "key" : "accessToken",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "windowDays",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "minFireCount",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "environment",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "serviceName",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "category",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by noise category."
+  }, {
+    "key" : "orderBy",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "page",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "size",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "alertName",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "includeCorrelations",
+    "value" : "",
+    "type" : "string"
+  } ],
+  "item" : [ {
+    "name" : "Batch-ingest alert firing events",
+    "request" : {
+      "method" : "POST",
+      "description" : "Batch-ingest alert firing events\n\nResponses:\n- 202: Batch accepted.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json",
+        "type" : "text"
+      } ],
+      "body" : {
+        "mode" : "raw",
+        "raw" : "{\"source\":\"PAGERDUTY\",\"events\":[{\"eventId\":\"a1b2c3d4-e5f6-7890-1234-567890abcdef\",\"alertName\":\"PaymentProcessorHigh5xx\",\"alertRule\":\"rate(http_5xx_total{service='payment-processor'}[5m]) > 0.01\",\"alertSeverity\":\"CRITICAL\",\"firedAt\":\"2026-01-01T00:00:00Z\",\"resolvedAt\":\"2026-01-01T00:00:00Z\",\"status\":\"RESOLVED\",\"acknowledgedAt\":\"2026-01-01T00:00:00Z\",\"acknowledgedBy\":\"sre.oncall@forgesphere.example.com\",\"timeToAcknowledgeSeconds\":245,\"timeToResolveSeconds\":1820,\"actionTaken\":\"RESTART\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"runbookUrl\":\"https://wiki.forgesphere.example.com/runbooks/payment-5xx\",\"relatedIncidentId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"notificationChannels\":[\"PAGERDUTY\",\"SLACK\"],\"labels\":{\"region\":\"us-east-1\",\"cluster\":\"prod-1\"}}]}",
+        "options" : {
+          "raw" : {
+            "language" : "json"
+          }
+        }
+      },
+      "url" : {
+        "raw" : "{{baseUrl}}/alerts/ingest",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "alerts", "ingest" ]
+      }
+    },
+    "response" : [ {
+      "name" : "202 Batch accepted.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Batch-ingest alert firing events\n\nResponses:\n- 202: Batch accepted.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"source\":\"PAGERDUTY\",\"events\":[{\"eventId\":\"a1b2c3d4-e5f6-7890-1234-567890abcdef\",\"alertName\":\"PaymentProcessorHigh5xx\",\"alertRule\":\"rate(http_5xx_total{service='payment-processor'}[5m]) > 0.01\",\"alertSeverity\":\"CRITICAL\",\"firedAt\":\"2026-01-01T00:00:00Z\",\"resolvedAt\":\"2026-01-01T00:00:00Z\",\"status\":\"RESOLVED\",\"acknowledgedAt\":\"2026-01-01T00:00:00Z\",\"acknowledgedBy\":\"sre.oncall@forgesphere.example.com\",\"timeToAcknowledgeSeconds\":245,\"timeToResolveSeconds\":1820,\"actionTaken\":\"RESTART\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"runbookUrl\":\"https://wiki.forgesphere.example.com/runbooks/payment-5xx\",\"relatedIncidentId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"notificationChannels\":[\"PAGERDUTY\",\"SLACK\"],\"labels\":{\"region\":\"us-east-1\",\"cluster\":\"prod-1\"}}]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/ingest",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "ingest" ]
+        }
+      },
+      "status" : "Batch accepted.",
+      "code" : 202,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"accepted\":true,\"eventsReceived\":500,\"uniqueAlertsUpdated\":42,\"newAlertsDetected\":3}"
+    }, {
+      "name" : "400 Invalid payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Batch-ingest alert firing events\n\nResponses:\n- 202: Batch accepted.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"source\":\"PAGERDUTY\",\"events\":[{\"eventId\":\"a1b2c3d4-e5f6-7890-1234-567890abcdef\",\"alertName\":\"PaymentProcessorHigh5xx\",\"alertRule\":\"rate(http_5xx_total{service='payment-processor'}[5m]) > 0.01\",\"alertSeverity\":\"CRITICAL\",\"firedAt\":\"2026-01-01T00:00:00Z\",\"resolvedAt\":\"2026-01-01T00:00:00Z\",\"status\":\"RESOLVED\",\"acknowledgedAt\":\"2026-01-01T00:00:00Z\",\"acknowledgedBy\":\"sre.oncall@forgesphere.example.com\",\"timeToAcknowledgeSeconds\":245,\"timeToResolveSeconds\":1820,\"actionTaken\":\"RESTART\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"runbookUrl\":\"https://wiki.forgesphere.example.com/runbooks/payment-5xx\",\"relatedIncidentId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"notificationChannels\":[\"PAGERDUTY\",\"SLACK\"],\"labels\":{\"region\":\"us-east-1\",\"cluster\":\"prod-1\"}}]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/ingest",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "ingest" ]
+        }
+      },
+      "status" : "Invalid payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    }, {
+      "name" : "500 Alert backend or analytics engine unavailable.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Batch-ingest alert firing events\n\nResponses:\n- 202: Batch accepted.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"source\":\"PAGERDUTY\",\"events\":[{\"eventId\":\"a1b2c3d4-e5f6-7890-1234-567890abcdef\",\"alertName\":\"PaymentProcessorHigh5xx\",\"alertRule\":\"rate(http_5xx_total{service='payment-processor'}[5m]) > 0.01\",\"alertSeverity\":\"CRITICAL\",\"firedAt\":\"2026-01-01T00:00:00Z\",\"resolvedAt\":\"2026-01-01T00:00:00Z\",\"status\":\"RESOLVED\",\"acknowledgedAt\":\"2026-01-01T00:00:00Z\",\"acknowledgedBy\":\"sre.oncall@forgesphere.example.com\",\"timeToAcknowledgeSeconds\":245,\"timeToResolveSeconds\":1820,\"actionTaken\":\"RESTART\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"runbookUrl\":\"https://wiki.forgesphere.example.com/runbooks/payment-5xx\",\"relatedIncidentId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"notificationChannels\":[\"PAGERDUTY\",\"SLACK\"],\"labels\":{\"region\":\"us-east-1\",\"cluster\":\"prod-1\"}}]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/ingest",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "ingest" ]
+        }
+      },
+      "status" : "Alert backend or analytics engine unavailable.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    } ]
+  }, {
+    "name" : "Rank alerts by wasted engineering time",
+    "request" : {
+      "method" : "GET",
+      "description" : "Rank alerts by wasted engineering time\n\nResponses:\n- 200: Ranked list of noisy alerts.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+      "header" : [ ],
+      "url" : {
+        "raw" : "{{baseUrl}}/alerts/noise-ranking?windowDays={{windowDays}}&minFireCount={{minFireCount}}&environment={{environment}}&serviceName={{serviceName}}&category={{category}}&orderBy={{orderBy}}&page={{page}}&size={{size}}",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "alerts", "noise-ranking" ],
+        "query" : [ {
+          "key" : "windowDays",
+          "value" : "1",
+          "disabled" : true
+        }, {
+          "key" : "minFireCount",
+          "value" : "1",
+          "disabled" : true
+        }, {
+          "key" : "environment",
+          "value" : "DEV",
+          "disabled" : true
+        }, {
+          "key" : "serviceName",
+          "value" : "sample",
+          "disabled" : true
+        }, {
+          "key" : "category",
+          "value" : "ALL",
+          "disabled" : true,
+          "description" : "Filter by noise category."
+        }, {
+          "key" : "orderBy",
+          "value" : "WASTED_HOURS",
+          "disabled" : true
+        }, {
+          "key" : "page",
+          "value" : "1",
+          "disabled" : true
+        }, {
+          "key" : "size",
+          "value" : "1",
+          "disabled" : true
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 Ranked list of noisy alerts.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Rank alerts by wasted engineering time\n\nResponses:\n- 200: Ranked list of noisy alerts.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/noise-ranking?windowDays={{windowDays}}&minFireCount={{minFireCount}}&environment={{environment}}&serviceName={{serviceName}}&category={{category}}&orderBy={{orderBy}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "noise-ranking" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "minFireCount",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true
+          }, {
+            "key" : "serviceName",
+            "value" : "sample",
+            "disabled" : true
+          }, {
+            "key" : "category",
+            "value" : "ALL",
+            "disabled" : true,
+            "description" : "Filter by noise category."
+          }, {
+            "key" : "orderBy",
+            "value" : "WASTED_HOURS",
+            "disabled" : true
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true
+          } ]
+        }
+      },
+      "status" : "Ranked list of noisy alerts.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"content\":[{\"alertName\":\"PaymentProcessorHigh5xx\",\"severity\":\"CRITICAL\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"owner\":\"payments-team\",\"fireCount\":1240,\"avgTimeToAckSeconds\":245,\"avgTimeToResolveSeconds\":1820,\"acknowledgeRate\":12.5,\"actionRate\":4.2,\"falsePositiveRate\":68.5,\"noiseScore\":92,\"wastedHours\":42.5,\"estimatedCostUSD\":4250.0,\"category\":\"HIGH_FALSE_POSITIVE\",\"status\":\"ACTIVE\",\"hasRunbook\":false,\"lastFiredAt\":\"2026-01-01T00:00:00Z\",\"recommendation\":\"Increase threshold from 0.01 to 0.05 and require 10m forDuration.\"}],\"totalElements\":187,\"totalPages\":1,\"summary\":{\"totalAlerts\":187,\"totalFires30d\":45280,\"totalWastedHours30d\":342.5,\"estimatedCostUSD30d\":34250.0,\"alertsWithNoRunbook\":42,\"alertsNeverAcked\":18,\"alertsWithHighFalsePositiveRate\":24}}"
+    }, {
+      "name" : "400 Invalid payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Rank alerts by wasted engineering time\n\nResponses:\n- 200: Ranked list of noisy alerts.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/noise-ranking?windowDays={{windowDays}}&minFireCount={{minFireCount}}&environment={{environment}}&serviceName={{serviceName}}&category={{category}}&orderBy={{orderBy}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "noise-ranking" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "minFireCount",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true
+          }, {
+            "key" : "serviceName",
+            "value" : "sample",
+            "disabled" : true
+          }, {
+            "key" : "category",
+            "value" : "ALL",
+            "disabled" : true,
+            "description" : "Filter by noise category."
+          }, {
+            "key" : "orderBy",
+            "value" : "WASTED_HOURS",
+            "disabled" : true
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true
+          } ]
+        }
+      },
+      "status" : "Invalid payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    }, {
+      "name" : "500 Alert backend or analytics engine unavailable.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Rank alerts by wasted engineering time\n\nResponses:\n- 200: Ranked list of noisy alerts.\n- 400: Invalid payload or missing required fields.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/noise-ranking?windowDays={{windowDays}}&minFireCount={{minFireCount}}&environment={{environment}}&serviceName={{serviceName}}&category={{category}}&orderBy={{orderBy}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", "noise-ranking" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "minFireCount",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true
+          }, {
+            "key" : "serviceName",
+            "value" : "sample",
+            "disabled" : true
+          }, {
+            "key" : "category",
+            "value" : "ALL",
+            "disabled" : true,
+            "description" : "Filter by noise category."
+          }, {
+            "key" : "orderBy",
+            "value" : "WASTED_HOURS",
+            "disabled" : true
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true
+          } ]
+        }
+      },
+      "status" : "Alert backend or analytics engine unavailable.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    } ]
+  }, {
+    "name" : "Get detailed health report for a specific alert",
+    "request" : {
+      "method" : "GET",
+      "description" : "Get detailed health report for a specific alert\n\nResponses:\n- 200: Detailed health report.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+      "header" : [ ],
+      "url" : {
+        "raw" : "{{baseUrl}}/alerts/:alertName/health?windowDays={{windowDays}}&includeCorrelations={{includeCorrelations}}",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "alerts", ":alertName", "health" ],
+        "query" : [ {
+          "key" : "windowDays",
+          "value" : "1",
+          "disabled" : true
+        }, {
+          "key" : "includeCorrelations",
+          "value" : "true",
+          "disabled" : true
+        } ],
+        "variable" : [ {
+          "key" : "alertName",
+          "value" : "sample"
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 Detailed health report.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed health report for a specific alert\n\nResponses:\n- 200: Detailed health report.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/health?windowDays={{windowDays}}&includeCorrelations={{includeCorrelations}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "health" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "includeCorrelations",
+            "value" : "true",
+            "disabled" : true
+          } ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Detailed health report.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"alertName\":\"PaymentProcessorHigh5xx\",\"rule\":\"rate(http_5xx_total{service='payment-processor'}[5m]) > 0.01\",\"severity\":\"CRITICAL\",\"serviceName\":\"payment-processor\",\"environment\":\"PRODUCTION\",\"owner\":\"payments-team\",\"status\":\"ACTIVE\",\"windowDays\":30,\"stats\":{\"fireCount\":1240,\"resolvedCount\":1240,\"ackCount\":155,\"actionCount\":52,\"falsePositiveCount\":850,\"avgDurationSeconds\":45,\"p95DurationSeconds\":320,\"avgTimeToAckSeconds\":245,\"avgTimeToResolveSeconds\":1820},\"noiseAnalysis\":{\"noiseScore\":92,\"wastedHours\":42.5,\"estimatedCostUSD\":4250.0,\"category\":\"HIGH_FALSE_POSITIVE\",\"acknowledgeRate\":12.5,\"actionRate\":4.2,\"falsePositiveRate\":68.5},\"actionDistribution\":[{\"action\":\"IGNORED\",\"count\":1080,\"percent\":87.1}],\"correlations\":[{\"factor\":\"TIME_OF_DAY\",\"correlationStrength\":0.87,\"detail\":\"Fires 4.2x more often between 2 AM - 3 AM UTC — coincides with backup job.\"}],\"probableRootCauses\":[{\"cause\":\"Threshold too tight — normal traffic variance exceeds 0.01 baseline.\",\"confidence\":0.89,\"evidence\":\"94% of fires resolve within 60s without human action.\",\"suggestedFix\":\"Increase threshold to 0.05 and require forDuration 10m.\"}],\"recentFirings\":[{\"firedAt\":\"2026-01-01T00:00:00Z\",\"resolvedAt\":\"2026-01-01T00:00:00Z\",\"durationSeconds\":1,\"acknowledgedBy\":\"sample\",\"actionTaken\":\"sample\",\"relatedIncidentId\":\"00000000-0000-0000-0000-000000000001\"}],\"recommendation\":{\"action\":\"TUNE_THRESHOLD\",\"details\":\"Increase threshold 0.01 → 0.05, forDuration 5m → 10m. Expected noise reduction: 85%.\",\"estimatedSavingsHoursPerMonth\":36.5,\"estimatedSavingsUSDPerMonth\":3650.0},\"generatedAt\":\"2026-01-01T00:00:00Z\"}"
+    }, {
+      "name" : "404 Alert not found.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed health report for a specific alert\n\nResponses:\n- 200: Detailed health report.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/health?windowDays={{windowDays}}&includeCorrelations={{includeCorrelations}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "health" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "includeCorrelations",
+            "value" : "true",
+            "disabled" : true
+          } ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Alert not found.",
+      "code" : 404,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    }, {
+      "name" : "500 Alert backend or analytics engine unavailable.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed health report for a specific alert\n\nResponses:\n- 200: Detailed health report.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/health?windowDays={{windowDays}}&includeCorrelations={{includeCorrelations}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "health" ],
+          "query" : [ {
+            "key" : "windowDays",
+            "value" : "1",
+            "disabled" : true
+          }, {
+            "key" : "includeCorrelations",
+            "value" : "true",
+            "disabled" : true
+          } ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Alert backend or analytics engine unavailable.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    } ]
+  }, {
+    "name" : "Silence, tune, or delete an alert",
+    "request" : {
+      "method" : "POST",
+      "description" : "Silence, tune, or delete an alert\n\nResponses:\n- 200: Action applied successfully.\n- 400: Invalid payload or missing required fields.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json",
+        "type" : "text"
+      } ],
+      "body" : {
+        "mode" : "raw",
+        "raw" : "{}",
+        "options" : {
+          "raw" : {
+            "language" : "json"
+          }
+        }
+      },
+      "url" : {
+        "raw" : "{{baseUrl}}/alerts/:alertName/action",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "alerts", ":alertName", "action" ],
+        "variable" : [ {
+          "key" : "alertName",
+          "value" : "sample"
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 Action applied successfully.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Silence, tune, or delete an alert\n\nResponses:\n- 200: Action applied successfully.\n- 400: Invalid payload or missing required fields.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/action",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "action" ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Action applied successfully.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"actionId\":\"f47ac10b-58cc-4372-a567-0e02b2c3d479\",\"alertName\":\"PaymentProcessorHigh5xx\",\"action\":\"TUNE_THRESHOLD\",\"status\":\"APPLIED\",\"reason\":\"Alert fired 1240 times in 30d; 96% transient spikes.\",\"owner\":\"payments-team\",\"ticketUrl\":\"https://jira.forgesphere.example.com/browse/PAY-4891\",\"tuneParameters\":{\"newThreshold\":\"0.05\",\"evaluationWindow\":\"15m\",\"forDuration\":\"10m\",\"severity\":\"WARNING\"},\"previousStatus\":\"ACTIVE\",\"newStatus\":\"TUNED\",\"performedAt\":\"2026-01-01T00:00:00Z\",\"performedBy\":\"sre.platform@forgesphere.example.com\",\"appliedTo\":[\"prometheus-alert-rules\",\"pagerduty-service:payment-processor\"],\"auditReference\":\"audit://alert-gardener/action-f47ac10b\"}"
+    }, {
+      "name" : "400 Invalid payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Silence, tune, or delete an alert\n\nResponses:\n- 200: Action applied successfully.\n- 400: Invalid payload or missing required fields.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/action",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "action" ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Invalid payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    }, {
+      "name" : "404 Alert not found.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Silence, tune, or delete an alert\n\nResponses:\n- 200: Action applied successfully.\n- 400: Invalid payload or missing required fields.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/action",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "action" ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Alert not found.",
+      "code" : 404,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    }, {
+      "name" : "500 Alert backend or analytics engine unavailable.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Silence, tune, or delete an alert\n\nResponses:\n- 200: Action applied successfully.\n- 400: Invalid payload or missing required fields.\n- 404: Alert not found.\n- 500: Alert backend or analytics engine unavailable.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/alerts/:alertName/action",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "alerts", ":alertName", "action" ],
+          "variable" : [ {
+            "key" : "alertName",
+            "value" : "sample"
+          } ]
+        }
+      },
+      "status" : "Alert backend or analytics engine unavailable.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":404,\"errorCode\":\"ALERT_NOT_FOUND\",\"message\":\"No alert found with name: PaymentProcessorHigh5xx.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/alerts/PaymentProcessorHigh5xx/health\"}"
+    } ]
+  } ]
+}
